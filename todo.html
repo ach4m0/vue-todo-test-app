@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Vue.js ToDo App</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <style>
+    html,body {
+      margin: 0;
+      padding: 0;
+      border: 0;
+      text-align: center;
+    }
+    .flex {
+      display: flex;
+    }
+    .flex-row {
+      flex-direction: row;
+      justify-content: space-around;
+    }
+    .title {
+      margin: 1em 0;
+    }
+    .task-board {
+      text-align: center;
+      min-height: 60vh;
+      width: 45vw;
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <h1 class="text-primary title">Tareas</h1>
+    <div class="flex flex-row">
+      <div class="shadow p-3 mb-5 bg-white rounded task-board">
+        <h2 class="text-secondary title">To do<small class="form-text text-muted"> ({{countTasksIncompleted}})</small></h2>
+        
+        <input 
+          type="text"
+          class="form-control"
+          v-model="nuevaTarea" 
+          placeholder="Nueva tarea"
+          @keyup.enter="guardarTarea"
+        />
+        <br>
+        <input
+          type="button"
+          class="btn btn-primary"
+          @click="guardarTarea"
+          value="Añadir"
+        >
+        <br><br>
+        <div class="list-group">
+          <a 
+            v-for="task in getTaskList(false)"
+            class="list-group-item list-group-item-action"
+            @click="completeTask(task, $event)"
+          >{{ task.title }}</a>
+        </div>
+      </div>
+      <div class="shadow p-3 mb-5 bg-white rounded task-board">
+        <h2 class="text-secondary title">Completadas<small class="form-text text-muted"> ({{getTaskList(true).length}})</small></h2>
+        <div class="list-group">
+            <a 
+              v-for="task in getTaskList(true)"
+              class="list-group-item disabled"
+            >{{ task.title }}</a>
+          </div>
+      </div>
+    </div>
+    <pre style="text-align: left">{{ $data }}</pre>
+  </main>
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <script src="todo.js"></script>
+</body>
+
+</html>
